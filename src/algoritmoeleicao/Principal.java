@@ -7,7 +7,7 @@ public class Principal {
     public static Processo processo = new Processo();
     public static void main(String[] args) {
         
-        String i = JOptionPane.showInputDialog("Digite um ID");
+        String i = JOptionPane.showInputDialog("Digite um ID:");
         try {
             int id = Integer.parseInt(i);
             processo.setId(id);
