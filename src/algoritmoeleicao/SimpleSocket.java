@@ -29,17 +29,14 @@ import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.MulticastSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public abstract class SimpleSocket {
 
     int UDP_PORT;
     int DATA_LENGTH_BYTES = 4;
-    private DatagramSocket serverSocket;
 
     public abstract void comandoRecebido(Serializable dados);
 
@@ -47,7 +44,6 @@ public abstract class SimpleSocket {
         this.UDP_PORT = UDP_PORT;
         new Receptor();
     }
-
 
     public void enviar(Serializable data) {
         //<editor-fold defaultstate="collapsed" desc="Enviar">
@@ -60,12 +56,13 @@ public abstract class SimpleSocket {
             byte[] buffer = baos.toByteArray();
             byte[] dadosEnviados = transformar(buffer);
             DatagramSocket socket = new DatagramSocket();
-            InetAddress client = InetAddress.getByName("255.255.255.255");
+            InetAddress client = InetAddress.getByName("225.225.225.225");
             DatagramPacket packet;
             packet = new DatagramPacket(dadosEnviados, DATA_LENGTH_BYTES, client, UDP_PORT);
             socket.send(packet);
             packet = new DatagramPacket(buffer, buffer.length, client, UDP_PORT);
             socket.send(packet);
+            socket.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,40 +70,45 @@ public abstract class SimpleSocket {
         //</editor-fold>
     }
 
-
     class Receptor implements Runnable {
         //<editor-fold defaultstate="collapsed" desc="Receber">
+
+        MulticastSocket serverSocket;
+        //DatagramSocket serverSocket;
+
         public Receptor() {
             try {
-                InetAddress inetListen = InetAddress.getByName("0.0.0.0");
-                serverSocket = new DatagramSocket(UDP_PORT, inetListen);
+                serverSocket = new MulticastSocket(UDP_PORT);
+                InetAddress group = InetAddress.getByName("225.225.225.225");
+                serverSocket.joinGroup(group);
+//                
+//                InetAddress inetListen = InetAddress.getByName("0.0.0.0");
+//                serverSocket = new DatagramSocket(UDP_PORT, inetListen);
                 Thread escuta = new Thread(this);
                 escuta.start();
-            } catch (UnknownHostException ex) {
-                Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SocketException ex) {
-                Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
+             
+            } catch (Exception ex) {
+                Logger.getLogger(SimpleSocket.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         @Override
         public void run() {
             try {
-                while (true) {
-                    DatagramSocket socket = serverSocket;
+                while (true) {                    
                     byte[] data = new byte[DATA_LENGTH_BYTES];
                     DatagramPacket packet = new DatagramPacket(data, data.length);
-                    socket.receive(packet);
+                    serverSocket.receive(packet);
                     int len = getTamanhoBuffer(data);
                     byte[] buffer = new byte[len];
                     packet = new DatagramPacket(buffer, buffer.length);
-                    socket.receive(packet);
+                    serverSocket.receive(packet);
                     ByteArrayInputStream baos = new ByteArrayInputStream(buffer);
                     ObjectInputStream oos = new ObjectInputStream(baos);
                     comandoRecebido((Serializable) oos.readObject());
-                    
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         //</editor-fold>
@@ -116,7 +118,7 @@ public abstract class SimpleSocket {
     private byte[] transformar(byte[] buffer) {
         int number = buffer.length;
         byte[] data = new byte[DATA_LENGTH_BYTES];
-        
+
         // int -> byte[]
         for (int i = 0; i < DATA_LENGTH_BYTES; ++i) {
             int shift = i << 3; // i * 8
@@ -124,15 +126,14 @@ public abstract class SimpleSocket {
         }
         return data;
     }
-    
+
     private int getTamanhoBuffer(byte[] data) {
         int len = 0;
         for (int i = 0; i < DATA_LENGTH_BYTES; ++i) {
             len |= (data[3 - i] & 0xff) << (i << 3);
         }
         return len;
-        
+
     }
     //</editor-fold>
-
 }
