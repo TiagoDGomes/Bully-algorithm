@@ -101,12 +101,13 @@ public class Processo {
     public void enviarMensagemEleicao() {
         Mensagem m = new MensagemEleicao(id);
         enviar(m);
-        coordenadorAtivo = false;
+        coordenadorAtivo = false;        
         Runnable r = new Runnable() {
+            //<editor-fold defaultstate="collapsed" desc="aguardar se há coordenador">
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(6000);
                     if (!coordenadorAtivo) {
                         enviarMensagemCoordenador();
                     }
@@ -114,7 +115,9 @@ public class Processo {
                     Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            //</editor-fold>
         };
+        
         new Thread(r).start();
     }
 
@@ -136,10 +139,11 @@ public class Processo {
         enviar(m);
         coordenadorAtivo = false;
         Runnable r = new Runnable() {
+            //<editor-fold defaultstate="collapsed" desc="aguardar se o coordenador responde">
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(6000);
                     if (!coordenadorAtivo) {
                         enviarMensagemEleicao();
                     }
@@ -147,6 +151,7 @@ public class Processo {
                     Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            //</editor-fold>
         };
         new Thread(r).start();
     }
