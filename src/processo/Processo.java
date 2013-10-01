@@ -101,7 +101,21 @@ public class Processo {
     public void enviarMensagemEleicao() {
         Mensagem m = new MensagemEleicao(id);
         enviar(m);
-        testarLider();
+        liderAtivo = false;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(4000);
+                    if (!liderAtivo) {
+                        enviarMensagemCoordenador();
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        new Thread(r).start();
     }
 
     public void enviarMensagemCoordenador() {
@@ -120,15 +134,6 @@ public class Processo {
     public void enviarMensagemRequest(int idDestino) {
         Mensagem m = new MensagemRequest(id, idDestino);
         enviar(m);
-        testarLider();
-    }
-
-    public void enviarMensagemResponse(int idDestino) {
-        Mensagem m = new MensagemResponse(id, idDestino);
-        enviar(m);
-    }
-
-    public void testarLider() {
         liderAtivo = false;
         Runnable r = new Runnable() {
             @Override
@@ -136,7 +141,7 @@ public class Processo {
                 try {
                     Thread.sleep(4000);
                     if (!liderAtivo) {
-                        enviarMensagemCoordenador();
+                        enviarMensagemEleicao();
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Processo.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,6 +149,11 @@ public class Processo {
             }
         };
         new Thread(r).start();
+    }
+
+    public void enviarMensagemResponse(int idDestino) {
+        Mensagem m = new MensagemResponse(id, idDestino);
+        enviar(m);
     }
 
     private void notificarListenerSobreRecebimento(Mensagem m) {

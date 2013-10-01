@@ -39,7 +39,7 @@ public abstract class SimpleSocket {
 
     int UDP_PORT;
     int DATA_LENGTH_BYTES = 4;
-    String MULTICAST_ADDRESS = "225.2.3.4";
+    String MULTICAST_ADDRESS = "239.255.255.255";
     public abstract void comandoRecebido(Serializable dados);
 
     public SimpleSocket(int UDP_PORT) {
