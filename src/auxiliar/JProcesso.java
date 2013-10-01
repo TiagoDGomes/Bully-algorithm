@@ -81,6 +81,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         panelMaior.add(lblSendEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 190, -1));
 
         lblReceiveAlive.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblReceiveAlive.setForeground(new java.awt.Color(153, 51, 0));
         lblReceiveAlive.setText("<- Alive");
         panelMaior.add(lblReceiveAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 53, 246, -1));
 
@@ -91,11 +92,13 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         panelMaior.add(lblSendRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, 190, -1));
 
         lblReceiveResponse.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblReceiveResponse.setForeground(new java.awt.Color(153, 51, 0));
         lblReceiveResponse.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblReceiveResponse.setText("<- Response");
         panelMaior.add(lblReceiveResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 109, 190, -1));
 
         lblReceiveCoordenador.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblReceiveCoordenador.setForeground(new java.awt.Color(153, 51, 0));
         lblReceiveCoordenador.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblReceiveCoordenador.setText("<- Coordenador");
         panelMaior.add(lblReceiveCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, 190, -1));
@@ -109,6 +112,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         panelMenor.add(lblReceiveEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 190, -1));
 
         lblSendAlive.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblSendAlive.setForeground(new java.awt.Color(153, 51, 0));
         lblSendAlive.setText("<- Alive");
         panelMenor.add(lblSendAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 46, 190, -1));
 
@@ -119,11 +123,13 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         panelMenor.add(lblReceiveRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, 190, -1));
 
         lblSendResponse.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblSendResponse.setForeground(new java.awt.Color(153, 51, 0));
         lblSendResponse.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblSendResponse.setText("<- Response");
         panelMenor.add(lblSendResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 109, 180, -1));
 
         lblSendCoordenador.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        lblSendCoordenador.setForeground(new java.awt.Color(153, 51, 0));
         lblSendCoordenador.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblSendCoordenador.setText("<- Coordenador");
         panelMenor.add(lblSendCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, 190, -1));
@@ -180,11 +186,11 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(176, 176, 176)
+                .addGap(162, 162, 162)
                 .addComponent(lblProcesso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btStart)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
