@@ -312,8 +312,12 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
             right2left(lblReceiveAlive);
         }
     }
-
+    @Override
+    public void eventoNovoCoordenador(int id) {
+        lblLider.setText("Líder ativo: " + id);
+    }
     private void left2right(final JLabel lbl){
+        //<editor-fold defaultstate="collapsed" desc="animação label: esquerda para direita">
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -336,8 +340,10 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
             }
         };
         new Thread(r).start();
+        //</editor-fold>
     }
     private void right2left(final JLabel lbl){
+        //<editor-fold defaultstate="collapsed" desc="animação label: direita para a esquerda">
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -360,9 +366,11 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
             }
         };
         new Thread(r).start();
+        //</editor-fold>
     }
     private void blink(final JLabel lbl) {
-
+        //<editor-fold defaultstate="collapsed" desc="animação label: piscar">
+        
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -380,11 +388,8 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
             }
         };
         new Thread(r).start();
-
+        //</editor-fold>
     }
 
-    @Override
-    public void eventoNovoCoordenador(int id) {
-        lblLider.setText("Líder ativo: " + id);
-    }
+
 }
