@@ -15,16 +15,16 @@ import mensagem.ListenerMensagem;
 public class Processo {
 
     private int id;
-    private int idLider;
+    private int idCoordenador;
 
-    public int getIdLider() {
-        return idLider;
+    public int getIdCoordenador() {
+        return idCoordenador;
     }
 
-    public void setIdLider(int idLider) {
-        this.idLider = idLider;
+    public void setIdCoordenador(int idCoordenador) {
+        this.idCoordenador = idCoordenador;
     }
-    private boolean liderAtivo;
+    private boolean coordenadorAtivo;
     private SimpleSocket socket;
     private ListenerMensagem listener;
 
@@ -55,20 +55,20 @@ public class Processo {
                 System.out.println(msg);
                 if (msg.getIdEmissor() > id) {
                     if (msg instanceof MensagemCoordenador) {
-                        idLider = msg.getIdEmissor();
-                        liderAtivo = true;
-                        System.out.println("lider: " + idLider);
+                        idCoordenador = msg.getIdEmissor();
+                        coordenadorAtivo = true;
+                        System.out.println("coordenador: " + idCoordenador);
                         notificarListenerSobreRecebimento(msg);
-                        notificarListenerSobreNovoLider(idLider);
+                        notificarListenerSobreNovoCoordenador(idCoordenador);
                     } else if (msg instanceof MensagemResponse) {
                         MensagemResponse mr = (MensagemResponse) msg;
                         if (mr.getIdDestino() == id) {
-                            liderAtivo = true;
-                            System.out.println("resposta recebida; lider ativo");
+                            coordenadorAtivo = true;
+                            System.out.println("resposta recebida; coordenador ativo");
                             notificarListenerSobreRecebimento(msg);
                         }
                     } else if (msg instanceof MensagemAlive) {
-                        liderAtivo = true;
+                        coordenadorAtivo = true;
                         System.out.println("processo maior presente");
                         notificarListenerSobreRecebimento(msg);
                     }
@@ -78,7 +78,7 @@ public class Processo {
                         System.out.println("sou processo maior (" + id + " > " + msg.getIdEmissor() + ")");
                         notificarListenerSobreRecebimento(msg);
                         enviarMensagemEleicao();
-                    } else if ((msg instanceof MensagemRequest) && (isLider())) {
+                    } else if ((msg instanceof MensagemRequest) && (isCoordenador())) {
                         enviarMensagemResponse(msg.getIdEmissor());
                         System.out.println("respondendo a " + msg.getIdEmissor());
                         notificarListenerSobreRecebimento(msg);
@@ -89,8 +89,8 @@ public class Processo {
         enviarMensagemEleicao();
     }
 
-    private boolean isLider() {
-        return (id == idLider);
+    private boolean isCoordenador() {
+        return (id == idCoordenador);
     }
 
     private void enviar(Mensagem m) {
@@ -101,13 +101,13 @@ public class Processo {
     public void enviarMensagemEleicao() {
         Mensagem m = new MensagemEleicao(id);
         enviar(m);
-        liderAtivo = false;
+        coordenadorAtivo = false;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(4000);
-                    if (!liderAtivo) {
+                    if (!coordenadorAtivo) {
                         enviarMensagemCoordenador();
                     }
                 } catch (InterruptedException ex) {
@@ -120,10 +120,10 @@ public class Processo {
 
     public void enviarMensagemCoordenador() {
         Mensagem m = new MensagemCoordenador(id);
-        idLider = id;
-        liderAtivo = true;
+        idCoordenador = id;
+        coordenadorAtivo = true;
         enviar(m);
-        notificarListenerSobreNovoLider(idLider);
+        notificarListenerSobreNovoCoordenador(idCoordenador);
     }
 
     public void enviarMensagemAlive(int idDestino) {
@@ -134,13 +134,13 @@ public class Processo {
     public void enviarMensagemRequest(int idDestino) {
         Mensagem m = new MensagemRequest(id, idDestino);
         enviar(m);
-        liderAtivo = false;
+        coordenadorAtivo = false;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(4000);
-                    if (!liderAtivo) {
+                    if (!coordenadorAtivo) {
                         enviarMensagemEleicao();
                     }
                 } catch (InterruptedException ex) {
@@ -168,9 +168,9 @@ public class Processo {
         }
     }
 
-    private void notificarListenerSobreNovoLider(int idLider) {
+    private void notificarListenerSobreNovoCoordenador(int idCoordenador) {
         if (listener != null) {
-            listener.eventoNovoCoordenador(idLider);
+            listener.eventoNovoCoordenador(idCoordenador);
         }
     }
 }

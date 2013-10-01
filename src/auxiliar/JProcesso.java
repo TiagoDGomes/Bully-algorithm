@@ -53,11 +53,13 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         lblSendResponse = new javax.swing.JLabel();
         lblSendCoordenador = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lblLider = new javax.swing.JLabel();
+        lblCoordenador = new javax.swing.JLabel();
         btRequest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jSeparator1.setBackground(new java.awt.Color(51, 153, 255));
+        jSeparator1.setForeground(new java.awt.Color(51, 0, 204));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -75,68 +77,68 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         panelMaior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblSendEleicao.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblSendEleicao.setForeground(new java.awt.Color(0, 0, 204));
+        lblSendEleicao.setForeground(new java.awt.Color(0, 153, 0));
         lblSendEleicao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSendEleicao.setText("Eleição ->");
-        panelMaior.add(lblSendEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 190, -1));
+        panelMaior.add(lblSendEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 150, -1));
 
         lblReceiveAlive.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblReceiveAlive.setForeground(new java.awt.Color(153, 51, 0));
+        lblReceiveAlive.setForeground(new java.awt.Color(255, 0, 51));
         lblReceiveAlive.setText("<- Alive");
-        panelMaior.add(lblReceiveAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 53, 246, -1));
+        panelMaior.add(lblReceiveAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 53, 150, -1));
 
         lblSendRequest.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblSendRequest.setForeground(new java.awt.Color(0, 0, 153));
+        lblSendRequest.setForeground(new java.awt.Color(0, 153, 0));
         lblSendRequest.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblSendRequest.setText("Request ->");
-        panelMaior.add(lblSendRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, 190, -1));
+        panelMaior.add(lblSendRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, 150, -1));
 
         lblReceiveResponse.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblReceiveResponse.setForeground(new java.awt.Color(153, 51, 0));
+        lblReceiveResponse.setForeground(new java.awt.Color(255, 0, 51));
         lblReceiveResponse.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblReceiveResponse.setText("<- Response");
-        panelMaior.add(lblReceiveResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 109, 190, -1));
+        panelMaior.add(lblReceiveResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 109, 150, -1));
 
         lblReceiveCoordenador.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblReceiveCoordenador.setForeground(new java.awt.Color(153, 51, 0));
+        lblReceiveCoordenador.setForeground(new java.awt.Color(255, 0, 51));
         lblReceiveCoordenador.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblReceiveCoordenador.setText("<- Coordenador");
-        panelMaior.add(lblReceiveCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, 190, -1));
+        panelMaior.add(lblReceiveCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, 150, -1));
 
         panelMenor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblReceiveEleicao.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        lblReceiveEleicao.setForeground(new java.awt.Color(0, 0, 204));
+        lblReceiveEleicao.setForeground(new java.awt.Color(0, 0, 153));
         lblReceiveEleicao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblReceiveEleicao.setText("Eleição ->");
-        panelMenor.add(lblReceiveEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 190, -1));
+        panelMenor.add(lblReceiveEleicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 140, -1));
 
         lblSendAlive.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblSendAlive.setForeground(new java.awt.Color(153, 51, 0));
         lblSendAlive.setText("<- Alive");
-        panelMenor.add(lblSendAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 46, 190, -1));
+        panelMenor.add(lblSendAlive, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 46, 150, -1));
 
         lblReceiveRequest.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblReceiveRequest.setForeground(new java.awt.Color(0, 0, 153));
         lblReceiveRequest.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblReceiveRequest.setText("Request ->");
-        panelMenor.add(lblReceiveRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, 190, -1));
+        panelMenor.add(lblReceiveRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 81, 150, -1));
 
         lblSendResponse.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblSendResponse.setForeground(new java.awt.Color(153, 51, 0));
         lblSendResponse.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblSendResponse.setText("<- Response");
-        panelMenor.add(lblSendResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 109, 180, -1));
+        panelMenor.add(lblSendResponse, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 109, 150, -1));
 
         lblSendCoordenador.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         lblSendCoordenador.setForeground(new java.awt.Color(153, 51, 0));
         lblSendCoordenador.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblSendCoordenador.setText("<- Coordenador");
-        panelMenor.add(lblSendCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 144, 190, -1));
+        panelMenor.add(lblSendCoordenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 144, 150, -1));
 
-        lblLider.setFont(lblLider.getFont().deriveFont(lblLider.getFont().getStyle() | java.awt.Font.BOLD));
-        lblLider.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLider.setText("Líder: desconhecido");
+        lblCoordenador.setFont(lblCoordenador.getFont().deriveFont(lblCoordenador.getFont().getStyle() | java.awt.Font.BOLD, lblCoordenador.getFont().getSize()+2));
+        lblCoordenador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCoordenador.setText("Coordenador: desconhecido");
 
         btRequest.setText("Request");
         btRequest.setEnabled(false);
@@ -150,23 +152,16 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btRequest)
-                .addGap(179, 179, 179))
+            .addComponent(lblCoordenador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btRequest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblLider)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btRequest)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblCoordenador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(btRequest))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -176,31 +171,34 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelMenor, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panelMaior, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(panelMenor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblProcesso)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btStart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(panelMaior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 10, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(lblProcesso)
-                .addGap(10, 10, 10)
-                .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btStart)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblProcesso)
+                    .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btStart))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -226,7 +224,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
     }//GEN-LAST:event_btStartActionPerformed
 
     private void btRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRequestActionPerformed
-        processo.enviarMensagemRequest(processo.getIdLider());
+        processo.enviarMensagemRequest(processo.getIdCoordenador());
     }//GEN-LAST:event_btRequestActionPerformed
 
     public static void main(String args[]) {
@@ -273,7 +271,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
     private javax.swing.JComboBox cmbId;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblLider;
+    private javax.swing.JLabel lblCoordenador;
     private javax.swing.JLabel lblProcesso;
     private javax.swing.JLabel lblReceiveAlive;
     private javax.swing.JLabel lblReceiveCoordenador;
@@ -320,7 +318,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
     }
     @Override
     public void eventoNovoCoordenador(int id) {
-        lblLider.setText("Líder ativo: " + id);
+        lblCoordenador.setText("Coordenador ativo: " + id);
     }
     private void left2right(final JLabel lbl){
         //<editor-fold defaultstate="collapsed" desc="animação label: esquerda para direita">
