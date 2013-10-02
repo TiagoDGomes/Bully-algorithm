@@ -21,13 +21,13 @@ package auxiliar;
  *
  * @author Tiago
  */
-
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -37,11 +37,10 @@ import java.util.logging.Logger;
 
 public abstract class SimpleSocket {
 
-    int UDP_PORT ;
-    int DATA_LENGTH_BYTES = 4;
-    String MULTICAST_ADDRESS = "239.1.2.3"; // de 224.0.0.0 a 239.255.255.255
-    
-    
+    private int UDP_PORT;
+    private final int DATA_LENGTH_BYTES = 4;
+    public final String MULTICAST_ADDRESS = "234.56.78.9"; // de 224.0.0.0 a 239.255.255.255
+
     public abstract void comandoRecebido(Serializable dados);
 
     public SimpleSocket(int UDP_PORT) {
@@ -78,26 +77,31 @@ public abstract class SimpleSocket {
         //<editor-fold defaultstate="collapsed" desc="Receber">
 
         MulticastSocket serverSocket;
-
-
-        public Receptor() {
+        public void ativar(){
             try {
+                System.out.println("Ativando socket...");
+                try {
+                    serverSocket.close();
+                } catch (Exception e) {
+                }
                 serverSocket = new MulticastSocket(UDP_PORT);
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 serverSocket.joinGroup(group);
                 Thread threadEscuta = new Thread(this);
                 threadEscuta.start();
-             
             } catch (Exception ex) {
                 Logger.getLogger(SimpleSocket.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        public Receptor() {
+            ativar();
         }
 
         @Override
         public void run() {
             try {
-                while (true) {       
-                    
+                while (true) {
+
                     //<editor-fold defaultstate="collapsed" desc="Tratamento dos comandos recebidos...">
                     byte[] data = new byte[DATA_LENGTH_BYTES];
                     DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -109,11 +113,20 @@ public abstract class SimpleSocket {
                     ByteArrayInputStream baos = new ByteArrayInputStream(buffer);
                     ObjectInputStream oos = new ObjectInputStream(baos);
                     //</editor-fold>
-                    
+
                     comandoRecebido((Serializable) oos.readObject());
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                System.exit(1);
+            } catch (StreamCorruptedException sce) {
+                System.err.println("Erro no recebimento: Cabeçalho inválido.");
+                ativar();
+            } catch (IOException ex) {
+                Logger.getLogger(SimpleSocket.class.getName()).log(Level.SEVERE, null, ex);
+                System.exit(1);
+            } finally {
+
             }
         }
         //</editor-fold>
