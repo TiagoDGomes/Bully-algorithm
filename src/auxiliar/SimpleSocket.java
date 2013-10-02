@@ -37,9 +37,11 @@ import java.util.logging.Logger;
 
 public abstract class SimpleSocket {
 
-    int UDP_PORT;
+    int UDP_PORT ;
     int DATA_LENGTH_BYTES = 4;
-    String MULTICAST_ADDRESS = "239.255.255.254";
+    String MULTICAST_ADDRESS = "239.1.2.3"; // de 224.0.0.0 a 239.255.255.255
+    
+    
     public abstract void comandoRecebido(Serializable dados);
 
     public SimpleSocket(int UDP_PORT) {
@@ -83,8 +85,8 @@ public abstract class SimpleSocket {
                 serverSocket = new MulticastSocket(UDP_PORT);
                 InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
                 serverSocket.joinGroup(group);
-                Thread escuta = new Thread(this);
-                escuta.start();
+                Thread threadEscuta = new Thread(this);
+                threadEscuta.start();
              
             } catch (Exception ex) {
                 Logger.getLogger(SimpleSocket.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,7 +96,9 @@ public abstract class SimpleSocket {
         @Override
         public void run() {
             try {
-                while (true) {                    
+                while (true) {       
+                    
+                    //<editor-fold defaultstate="collapsed" desc="Tratamento dos comandos recebidos...">
                     byte[] data = new byte[DATA_LENGTH_BYTES];
                     DatagramPacket packet = new DatagramPacket(data, data.length);
                     serverSocket.receive(packet);
@@ -104,6 +108,8 @@ public abstract class SimpleSocket {
                     serverSocket.receive(packet);
                     ByteArrayInputStream baos = new ByteArrayInputStream(buffer);
                     ObjectInputStream oos = new ObjectInputStream(baos);
+                    //</editor-fold>
+                    
                     comandoRecebido((Serializable) oos.readObject());
                 }
             } catch (Exception e) {

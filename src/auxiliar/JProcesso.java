@@ -1,5 +1,6 @@
 package auxiliar;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -17,9 +18,8 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
     Processo processo;
 
     public JProcesso() {
-        //super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
+        setLocationByPlatform(true);
         lblReceiveAlive.setVisible(false);
         lblSendAlive.setVisible(false);
         lblReceiveEleicao.setVisible(false);
@@ -30,6 +30,11 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         lblSendRequest.setVisible(false);
         lblReceiveResponse.setVisible(false);
         lblSendResponse.setVisible(false);
+        java.util.Vector v = new java.util.Vector();
+        for (int i = 1; i <= Processo.BULLY_ID; i++){
+            v.add(String.valueOf(i));
+        }
+        cmbId.setModel(new javax.swing.DefaultComboBoxModel(v));
     }
 
     @SuppressWarnings("unchecked")
@@ -57,6 +62,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
         btRequest = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jSeparator1.setBackground(new java.awt.Color(51, 153, 255));
         jSeparator1.setForeground(new java.awt.Color(51, 0, 204));
@@ -184,9 +190,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
                                 .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btStart)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btStart)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(panelMaior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 10, Short.MAX_VALUE)))))
@@ -319,6 +323,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
     @Override
     public void eventoNovoCoordenador(int id) {
         lblCoordenador.setText("Coordenador ativo: " + id);
+        blink(lblCoordenador);
     }
     private void left2right(final JLabel lbl){
         //<editor-fold defaultstate="collapsed" desc="animação label: esquerda para direita">
@@ -385,7 +390,7 @@ public class JProcesso extends javax.swing.JFrame implements ListenerMensagem {
                     }
                     lbl.setVisible(true);
                     Thread.sleep(1200);
-                    lbl.setVisible(false);
+                    //lbl.setVisible(false);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(JProcesso.class.getName()).log(Level.SEVERE, null, ex);
                 }
