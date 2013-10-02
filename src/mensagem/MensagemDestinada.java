@@ -6,7 +6,7 @@ package mensagem;
 
 /**
  *
- * @author Tiago
+ * @author Tiago Donizetti Gomes
  */
 public abstract class MensagemDestinada extends Mensagem {
 

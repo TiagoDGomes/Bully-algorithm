@@ -3,7 +3,7 @@ package mensagem;
 
 /**
  *
- * @author Tiago
+ * @author Tiago Donizetti Gomes
  */
 public class MensagemEleicao extends Mensagem {
 

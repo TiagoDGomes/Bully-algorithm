@@ -1,13 +1,10 @@
 package mensagem;
 
-
-
-
 import java.io.Serializable;
 
 /**
  *
- * @author Tiago
+ * @author Tiago Donizetti Gomes
  */
 public abstract class Mensagem implements Serializable{
     private int idEmissor;

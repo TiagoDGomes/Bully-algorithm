@@ -10,27 +10,26 @@ import mensagem.MensagemResponse;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mensagem.ListenerMensagem;
 
 public class Processo {
 
     public static final int BULLY_ID = 5;
-    private boolean coordenadorAtivo;
+    private boolean flagCoordenadorAtivo;
     private int id;
     private int idCoordenador;
     private SimpleSocket socket;
-    private ListenerMensagem listener;
+    private ListenerProcesso listener;
 
     //<editor-fold defaultstate="collapsed" desc="Getters e Setters">
     public int getIdCoordenador() {
         return idCoordenador;
     }
 
-    public ListenerMensagem getListener() {
+    public ListenerProcesso getListener() {
         return listener;
     }
 
-    public void setListener(ListenerMensagem listener) {
+    public void setListener(ListenerProcesso listener) {
         this.listener = listener;
     }
 
@@ -60,8 +59,8 @@ public class Processo {
 
                         //<editor-fold defaultstate="collapsed" desc="Mensagem de definição de coordenador recebida.">
                         idCoordenador = msg.getIdEmissor();
-                        coordenadorAtivo = true;
-                        System.out.println("[R] MensagemCoordenador - " + idCoordenador);
+                        flagCoordenadorAtivo = true;
+                        System.out.println("[R] (" + id + ") " + msg.getClass().getSimpleName() + " recebido de " + idCoordenador);
                         notificarListenerSobreRecebimento(msg);
                         notificarListenerSobreNovoCoordenador(idCoordenador);
                         //</editor-fold>
@@ -71,8 +70,8 @@ public class Processo {
                         //<editor-fold defaultstate="collapsed" desc="O coordenador respondeu">
                         MensagemResponse mr = (MensagemResponse) msg;
                         if (mr.getIdDestino() == id) {
-                            coordenadorAtivo = true;
-                            System.out.println("resposta recebida; coordenador ativo");
+                            flagCoordenadorAtivo = true;
+                            System.out.println("[R] (" + id + ") " + msg.getClass().getSimpleName() + " recebido de " + idCoordenador);
                             notificarListenerSobreRecebimento(msg);
                         }
                         //</editor-fold>
@@ -82,18 +81,24 @@ public class Processo {
                         //<editor-fold defaultstate="collapsed" desc="A eleição revelou que o coordenador está ativo e que deve desistir da eleição">
                         MensagemAlive ma = (MensagemAlive) msg;
                         if (ma.getIdDestino() == id) {
-                            System.out.println("[R] MensagemAlive - Um processo maior está presente: " + ma.getIdEmissor());
-                            coordenadorAtivo = true;
+                            System.out.println("[R] (" + id + ") " + msg.getClass().getSimpleName()
+                                    + " recebido de " + ma.getIdEmissor()
+                                    + ". O processo é maior. Desistir.");
+                            flagCoordenadorAtivo = true;
                             notificarListenerSobreRecebimento(msg);
                         }
                         //</editor-fold>
 
                     }
+
                 } else if (msg.getIdEmissor() < id) { // Processos menores enviando mensagens...
                     if (msg instanceof MensagemEleicao) {
 
                         //<editor-fold defaultstate="collapsed" desc="Um processo de ID menor solicitou eleição. Enviar mensagem para desistir">
-                        System.out.println("[R] MensagemEleicao - Mas sou um processo maior (" + id + " > " + msg.getIdEmissor() + ")");
+
+                        System.out.println("[R] (" + id + ") " + msg.getClass().getSimpleName()
+                                + " recebido de " + msg.getIdEmissor() 
+                                + ". Sou um processo maior (" + id + " > " + msg.getIdEmissor() + ")");
                         enviarMensagemAlive(msg.getIdEmissor());
                         notificarListenerSobreRecebimento(msg);
                         enviarMensagemEleicao();
@@ -102,13 +107,16 @@ public class Processo {
                     } else if ((msg instanceof MensagemRequest) && (isCoordenador())) { //  Tratar Requests se este processo for coordenador
 
                         //<editor-fold defaultstate="collapsed" desc="Um processo solicitou Request. Tem que enviar Response, ou o processo que solicitou irá fazer eleição">
-                        System.out.println("[R] MensagemRequest - responder a " + msg.getIdEmissor());
+                        System.out.println("[R] (" + id + ") " + msg.getClass().getSimpleName()
+                                + " recebido de " + msg.getIdEmissor() 
+                                + ". Responder...");
                         enviarMensagemResponse(msg.getIdEmissor());
                         notificarListenerSobreRecebimento(msg);
 
                         //</editor-fold>
 
                     }
+                    
                 }
             }
             //</editor-fold>
@@ -123,21 +131,23 @@ public class Processo {
 
     //<editor-fold defaultstate="collapsed" desc="Métodos para o envio das mensagens">
     private void enviar(Mensagem m) {
+        System.out.println("[E] " + m.getClass().getSimpleName() + " de " + m.getIdEmissor() + "...");
         socket.enviar(m);
         notificarListenerSobreEnvio(m);
+
     }
 
     public void enviarMensagemEleicao() {
         Mensagem m = new MensagemEleicao(id);
         enviar(m);
         //<editor-fold defaultstate="collapsed" desc="Aguardar o resultado da eleição. Se não responderem, tornar-se coordenador">
-        coordenadorAtivo = false;
+        flagCoordenadorAtivo = false;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(6000);
-                    if (!coordenadorAtivo) {
+                    if (!flagCoordenadorAtivo) {
                         enviarMensagemCoordenador();
                     }
                 } catch (InterruptedException ex) {
@@ -153,7 +163,7 @@ public class Processo {
     public void enviarMensagemCoordenador() {
         Mensagem m = new MensagemCoordenador(id);
         idCoordenador = id;
-        coordenadorAtivo = true;
+        flagCoordenadorAtivo = true;
         enviar(m);
         notificarListenerSobreNovoCoordenador(idCoordenador);
     }
@@ -167,13 +177,13 @@ public class Processo {
         Mensagem m = new MensagemRequest(id, idDestino);
         enviar(m);
         //<editor-fold defaultstate="collapsed" desc="Aguardar se o coordenador responde. Se não responder, fazer eleição">
-        coordenadorAtivo = false;
+        flagCoordenadorAtivo = false;
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(6000);
-                    if (!coordenadorAtivo) {
+                    if (!flagCoordenadorAtivo) {
                         enviarMensagemEleicao();
                     }
                 } catch (InterruptedException ex) {

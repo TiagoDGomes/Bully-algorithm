@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/processo/Processo.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemAlive.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/auxiliar/JProcesso.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/Mensagem.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemDestinada.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/auxiliar/SimpleSocket.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/processo/ListenerProcesso.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemCoordenador.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemEleicao.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemRequest.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/mensagem/MensagemResponse.java</file>
+        <file>file:/C:/Users/Tiago/Documents/GitHub/garcia-molina/src/auxiliar/CProcesso.java</file>
+    </open-files>
 </project-private>
