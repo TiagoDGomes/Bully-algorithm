@@ -1,7 +1,7 @@
 Algoritmo de Eleição (bully algorithm - Garcia-Molina)
 ===
 
-Trabalho para a disciplina de Sistemas Distribuídos para Web - setembro 2013
+Esta é uma aplicação de demonstração do algoritmo de eleição (bully algorithm - Garcia-Molina). Foi um trabalho desenvolvido para a disciplina de Sistemas Distribuídos para Web (IFSP Câmpus São João da Boa Vista) em setembro 2013.
 
 Para fazê-lo funcionar, abra várias instâncias do programa de coloque-as lado a lado.
 Para cada janela aberta, identifique-a com um número de processo único. Coloque na ordem certa para poder visualizar melhor.
