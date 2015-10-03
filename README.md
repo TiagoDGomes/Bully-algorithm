@@ -1,4 +1,4 @@
-Algoritmo de Eleição - Garcia Molina
+Algoritmo de Eleição - Garcia-Molina  (bully algorithm - Garcia-Molina)
 ===
 Trabalho para a disciplina de Sistemas Distribuídos para Web - setembro 2013
 
